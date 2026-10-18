@@ -124,7 +124,7 @@ const CONFIG = {
   musik:    "lagu.mp3",
   stikerFolder: "",               // contoh: "stiker/"
   stikerAkhir:  "stiker3.webp",
-  judulIntro: "Ada yang mau kukasih,ke kamu",
+  judulIntro: "Ada yang mau kukasih, {nama}",
 
   kuis: [
     { q: "Pas kita lagi nggak ngobrol, menurut kamu aku lagi ngapain?",
@@ -285,7 +285,26 @@ function reply(text){
   b.className = 'bubble me';
   b.textContent = text;
   chat.appendChild(b); toEnd();
-}appendChild(b);
+}
+function stickerBubble(src, emoji){
+  const w = document.createElement('div');
+  w.className = 'bubble them stk';
+  const st = makeSticker(src, emoji);
+  w.appendChild(st);
+  w.addEventListener('click', e => {
+    burst(e);
+    st.animate([{transform:'scale(1)'},{transform:'scale(1.35) rotate(8deg)'},{transform:'scale(1)'}], {duration:450});
+  });
+  chat.appendChild(w); buzz(); toEnd();
+}
+function dockButtons(list){
+  dock.innerHTML = '';
+  list.forEach(({label, cls, onClick}) => {
+    const b = document.createElement('button');
+    if (cls) b.className = cls;
+    b.textContent = label;
+    b.addEventListener('click', e => { burst(e); onClick(); });
+    dock.appendChild(b);
   });
 }
 
@@ -415,22 +434,3 @@ function buildReply(){
 </script>
 </body>
 </html>
-function stickerBubble(src, emoji){
-  const w = document.createElement('div');
-  w.className = 'bubble them stk';
-  const st = makeSticker(src, emoji);
-  w.appendChild(st);
-  w.addEventListener('click', e => {
-    burst(e);
-    st.animate([{transform:'scale(1)'},{transform:'scale(1.35) rotate(8deg)'},{transform:'scale(1)'}], {duration:450});
-  });
-  chat.appendChild(w); buzz(); toEnd();
-}
-function dockButtons(list){
-  dock.innerHTML = '';
-  list.forEach(({label, cls, onClick}) => {
-    const b = document.createElement('button');
-    if (cls) b.className = cls;
-    b.textContent = label;
-    b.addEventListener('click', e => { burst(e); onClick(); });
-    dock.
