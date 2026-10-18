@@ -8,144 +8,77 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#241532; --bg2:#3a2150; --paper:#ffe9f0; --rose:#ff6f9c;
-  --mint:#8fe3c8; --ink:#fff3f7; --ink-dark:#3b1f33;
-}
+:root{--bg:#241532;--bg2:#3a2150;--paper:#ffe9f0;--rose:#ff6f9c;--mint:#8fe3c8;--ink:#fff3f7;--ink-dark:#3b1f33}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{min-height:100%}
-body{
-  font-family:'Nunito',system-ui,sans-serif;color:var(--ink);
-  background:radial-gradient(120% 90% at 50% 0%,var(--bg2),var(--bg));
-  background-attachment:fixed;
-  min-height:100dvh;display:flex;justify-content:center;
-}
-.screen{
-  position:relative;z-index:1;
-  display:none;width:100%;max-width:480px;min-height:100dvh;
-  padding:28px 22px 40px;flex-direction:column;align-items:center;
-  justify-content:center;text-align:center;gap:20px;
-}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:radial-gradient(120% 90% at 50% 0%,var(--bg2),var(--bg));background-attachment:fixed;min-height:100dvh;display:flex;justify-content:center}
+.screen{position:relative;z-index:1;display:none;width:100%;max-width:480px;min-height:100dvh;padding:28px 22px 40px;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px}
 .screen.active{display:flex;animation:fadein .5s ease both}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
-
 h1,h2{font-family:'Caveat',cursive;font-weight:700;line-height:1.1}
-h1{font-size:2.6rem}
-h2{font-size:2.1rem}
+h1{font-size:2.6rem}h2{font-size:2.1rem}
 p.hint{opacity:.75;font-size:.95rem}
-
-button{
-  font:inherit;font-weight:800;cursor:pointer;border:0;border-radius:999px;
-  padding:14px 22px;color:var(--ink-dark);background:var(--paper);
-  transition:transform .15s ease,background .15s ease;width:100%;max-width:340px;
-}
+button{font:inherit;font-weight:800;cursor:pointer;border:0;border-radius:999px;padding:14px 22px;color:var(--ink-dark);background:var(--paper);transition:transform .15s ease;width:100%;max-width:340px}
 button:hover{transform:translateY(-2px)}
 button:active{transform:scale(.97)}
 button:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
 button.primary{background:var(--rose);color:#fff}
 button.ghost{background:rgba(36,21,50,.45);color:var(--ink);border:2px solid rgba(255,255,255,.4)}
-
-/* ---------- Layar 1: amplop ---------- */
-.envelope{
-  position:relative;width:240px;height:160px;background:var(--paper);
-  border-radius:10px;cursor:pointer;border:0;padding:0;max-width:none;
-  box-shadow:0 18px 40px rgba(0,0,0,.4);
-  animation:float 3s ease-in-out infinite;
-}
+.envelope{position:relative;width:240px;height:160px;background:var(--paper);border-radius:10px;border:0;padding:0;max-width:none;box-shadow:0 18px 40px rgba(0,0,0,.4);animation:float 3s ease-in-out infinite}
 .envelope:hover{transform:none}
-.envelope .flap{
-  position:absolute;top:0;left:0;width:100%;height:100%;
-  background:#ffd0e0;clip-path:polygon(0 0,100% 0,50% 58%);
-  transform-origin:top;transition:transform .6s ease;border-radius:10px 10px 0 0;
-}
-.envelope .heart{
-  position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
-  font-size:2rem;transition:opacity .3s;
-}
+.envelope .flap{position:absolute;inset:0;background:#ffd0e0;clip-path:polygon(0 0,100% 0,50% 58%);transform-origin:top;transition:transform .6s ease;border-radius:10px 10px 0 0}
+.envelope .heart{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);font-size:2rem;transition:opacity .3s}
 .envelope.open{animation:none}
 .envelope.open .flap{transform:rotateX(180deg)}
 .envelope.open .heart{opacity:0}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-
-/* ---------- Layar 2: kuis dalam bentuk chat ---------- */
 .screen.chat{padding:0;gap:0;justify-content:flex-start;align-items:stretch;text-align:left;height:100dvh;min-height:0}
 .chatbar{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(0,0,0,.25);backdrop-filter:blur(6px)}
 .avatar{width:42px;height:42px;border-radius:50%;background:var(--rose);display:grid;place-items:center;font-size:1.3rem}
-.chatbar .nm{font-weight:800}
-.chatbar .st{font-size:.8rem;opacity:.75}
+.chatbar .nm{font-weight:800}.chatbar .st{font-size:.8rem;opacity:.75}
 .chatlog{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:10px}
 .bubble{max-width:82%;padding:10px 14px;border-radius:18px;line-height:1.5;font-size:1.02rem;word-wrap:break-word;animation:bubIn .25s ease both}
 .them{align-self:flex-start;background:rgba(255,255,255,.13);border-bottom-left-radius:4px}
 .me{align-self:flex-end;background:var(--rose);color:#fff;border-bottom-right-radius:4px}
 .typing{display:flex;gap:5px;padding:14px 16px}
 .typing i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.75);animation:dot 1s infinite}
-.typing i:nth-child(2){animation-delay:.15s}
-.typing i:nth-child(3){animation-delay:.3s}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
 .stk{background:none;padding:0;cursor:pointer}
 .dock{padding:12px 16px 22px;display:flex;flex-direction:column;gap:10px;align-items:center;min-height:24px}
 @keyframes bubIn{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
 @keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
-
-/* stiker hidup: masuk dengan membal, lalu mengayun pelan terus */
 .sticker,.sticker-fallback{animation:stickerIn .75s cubic-bezier(.2,1.5,.4,1) both,idle 2.8s ease-in-out .8s infinite}
 .sticker{width:130px;height:130px;object-fit:contain}
 .sticker-fallback{font-size:4.2rem;line-height:1.1}
 @keyframes stickerIn{from{transform:scale(0) rotate(-25deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
 @keyframes idle{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-7px) rotate(3deg)}}
-
-/* ---------- Layar 3: surat ---------- */
-.letter{
-  width:100%;background:var(--paper);color:var(--ink-dark);border-radius:14px;
-  padding:24px 20px;text-align:left;min-height:280px;
-  box-shadow:0 14px 34px rgba(0,0,0,.35);
-}
-.letter .text{
-  font-family:'Caveat',cursive;font-size:1.55rem;line-height:1.35;white-space:pre-wrap;
-}
+.letter{width:100%;background:var(--paper);color:var(--ink-dark);border-radius:14px;padding:24px 20px;text-align:left;min-height:280px;box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.letter .text{font-family:'Caveat',cursive;font-size:1.55rem;line-height:1.35;white-space:pre-wrap}
 .caret{display:inline-block;width:2px;height:1.1em;background:var(--rose);margin-left:2px;vertical-align:-.15em;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-
-/* ---------- Layar 4: balasan ---------- */
 .options{width:100%;display:flex;flex-direction:column;gap:12px;align-items:center}
-.coupon{
-  display:none;width:100%;max-width:340px;border:2px dashed var(--mint);
-  border-radius:16px;padding:16px;font-size:1rem;line-height:1.5;
-}
+.coupon{display:none;width:100%;max-width:340px;border:2px dashed var(--mint);border-radius:16px;padding:16px;line-height:1.5}
 .coupon.show{display:block;animation:pop .45s cubic-bezier(.2,1.4,.4,1) both}
-
 .fh{position:fixed;pointer-events:none;font-size:1.4rem;z-index:50;animation:fly 1s ease-out forwards}
 @keyframes fly{to{transform:translate(var(--dx),var(--dy)) scale(1.3);opacity:0}}
 @keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
-/* matahari terbit di latar */
-#dawn{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity .8s linear;z-index:0;
-  background:linear-gradient(to top,rgba(255,176,100,.95) 0%,rgba(255,120,150,.55) 35%,transparent 72%)}
-#sun{position:fixed;left:50%;bottom:-130px;width:260px;height:260px;border-radius:50%;pointer-events:none;z-index:0;
-  background:radial-gradient(circle,#fff6c9 0%,#ffd36b 45%,rgba(255,170,90,0) 70%);
-  transform:translate(-50%,100%);transition:transform .8s linear}
-/* janji */
+#dawn{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity .8s linear;z-index:0;background:linear-gradient(to top,rgba(255,176,100,.95) 0%,rgba(255,120,150,.55) 35%,transparent 72%)}
+#sun{position:fixed;left:50%;bottom:-130px;width:260px;height:260px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,#fff6c9 0%,#ffd36b 45%,rgba(255,170,90,0) 70%);transform:translate(-50%,100%);transition:transform .8s linear}
 .promises{width:100%;display:flex;flex-direction:column;gap:12px;align-items:center}
-.pcard{max-width:340px;width:100%;min-height:88px;padding:16px;border-radius:18px;
-  background:rgba(255,255,255,.14);border:2px dashed rgba(255,255,255,.45);color:var(--ink);
-  font-weight:700;line-height:1.45;display:flex;align-items:center;justify-content:center}
+.pcard{max-width:340px;width:100%;min-height:88px;padding:16px;border-radius:18px;background:rgba(255,255,255,.14);border:2px dashed rgba(255,255,255,.45);color:var(--ink);font-weight:700;line-height:1.45;display:flex;align-items:center;justify-content:center}
 .pcard.open{background:var(--paper);color:var(--ink-dark);border:2px solid transparent;font-weight:600;animation:pop .4s cubic-bezier(.2,1.4,.4,1) both}
-@media (prefers-reduced-motion:reduce){
-  *{animation:none!important;transition:none!important}
-}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div id="dawn"></div><div id="sun"></div>
 
-<!-- LAYAR 1: amplop -->
 <section class="screen active" id="s-intro" aria-label="Pembuka">
-  <h1 id="introTitle">Ada sesuatu buat sunny</h1>
-  <button class="envelope" id="envelope" aria-label="Buka amplop">
-    <span class="flap"></span><span class="heart">💌</span>
-  </button>
+  <h1 id="introTitle"></h1>
+  <button class="envelope" id="envelope" aria-label="Buka amplop"><span class="flap"></span><span class="heart">💌</span></button>
   <p class="hint">Ketuk amplopnya ya</p>
 </section>
 
-<!-- LAYAR 2: kuis (bentuk chat) -->
 <section class="screen chat" id="s-quiz" aria-label="Chat kecil">
   <div class="chatbar">
     <div class="avatar">💌</div>
@@ -155,23 +88,20 @@ button.ghost{background:rgba(36,21,50,.45);color:var(--ink);border:2px solid rgb
   <div class="dock" id="dock"></div>
 </section>
 
-<!-- LAYAR 3: surat -->
 <section class="screen" id="s-letter" aria-label="Surat">
-  <h2 id="letterTitle">Sunny, ini dari rey</h2>
+  <h2 id="letterTitle"></h2>
   <div class="letter" id="letterBox" aria-live="polite"><span class="text" id="letterText"></span><span class="caret" id="caret"></span></div>
   <p class="hint" id="letterHint">Ketuk suratnya buat lompat ke akhir</p>
   <button class="primary" id="toReply" style="display:none">Lanjut</button>
 </section>
 
-<!-- LAYAR 3b: janji -->
 <section class="screen" id="s-promise" aria-label="Janji">
-  <h2>Ada tiga hal yang rey janjiin</h2>
-  <p class="hint">Kecil, tapi rey serius. Ketuk satu-satu.</p>
+  <h2>Ada tiga janji dariku</h2>
+  <p class="hint">Kecil, tapi aku serius. Ketuk satu-satu.</p>
   <div class="promises" id="promises"></div>
   <button class="primary" id="toReply2" style="display:none">Lanjut</button>
 </section>
 
-<!-- LAYAR 4: balasan -->
 <section class="screen" id="s-reply" aria-label="Balasan">
   <div id="replySticker"></div>
   <h2 id="replyTitle"></h2>
@@ -184,91 +114,81 @@ button.ghost{background:rgba(36,21,50,.45);color:var(--ink);border:2px solid rgb
 
 <script>
 /* =====================================================
-   BAGIAN YANG WAJIB LO GANTI (semua ada di CONFIG ini)
+   CUKUP UBAH BAGIAN CONFIG INI.
+   {nama} = nama penerima, {kamu} = nama pengirim (otomatis terisi)
    ===================================================== */
 const CONFIG = {
-  namaDia:  "Sunny",               // panggilan buat dia
-  namaKamu: "Rey",                 // nama lo / tanda tangan
-  waNumber: "6282170894285",       // GANTI: nomor WA lo, format 62 tanpa + dan tanpa 0 depan
-  musik:    "lagu-khusus.mp3",            // taruh file lagu di folder yang sama
-  stikerFolder: "",         // folder stiker (.webp) hasil ambil dari WA
+  namaDia:  "Kamu",
+  namaKamu: "Aku",
+  waNumber: "628xxxxxxxxxx",      // format 62, tanpa + dan tanpa 0 di depan
+  musik:    "lagu.mp3",
+  stikerFolder: "",               // contoh: "stiker/"
   stikerAkhir:  "stiker3.webp",
-  judulIntro: "Ada yang mau rey kasih, Sunny",
+  judulIntro: "Ada yang mau kukasih,ke kamu",
 
-  // Kuis: semua opsi benar. Kata-kata udah personal tapi umum, nggak wajib diubah.
   kuis: [
-    {
-      q: "Pas kita lagi nggak ngobrol, menurut sunny rey lagi ngapain?",
+    { q: "Pas kita lagi nggak ngobrol, menurut kamu aku lagi ngapain?",
       options: [
-        { label: "Mikirin rey", memory: "Jujur, iya sayang. Lebih sering dari yang berani rey akuin.", sticker: "stiker4.webp"},
-        { label: "Pura-pura sibuk", memory: "sunny bener. rey sibuk, tapi sibuknya nggak pernah bikin rey lupa sama sunny.", sticker: "stiker5.webp"},
-        { label: "Ngetik pesan terus dihapus", memory: "Ini yang paling bener. Berkali-kali rey buka chat cinta, ngetik, terus hapus lagi karena bingung mulai dari mana, Sunny.", sticker: "stiker6.webp" }
-      ]
-    },
-    {
-      q: "Hal apa yang paling kerasa pas rey nggak ada di dekat cinta?",
+        { label: "Mikirin aku", memory: "Jujur, iya. Lebih sering dari yang berani kuakui.", sticker: "stiker4.webp", emoji: "🥺" },
+        { label: "Pura-pura sibuk", memory: "Kamu bener. Aku kelihatan sibuk, tapi sesibuk apa pun, kamu nggak pernah benar-benar pergi dari kepalaku.", sticker: "stiker5.webp", emoji: "🙈" },
+        { label: "Ngetik pesan terus dihapus", memory: "Ini yang paling bener. Berkali-kali aku ngetik, lalu kuhapus lagi, karena bingung harus mulai dari mana.", sticker: "stiker6.webp", emoji: "✍️" }
+      ] },
+    { q: "Menurut kamu, apa yang paling kerasa buatku pas kita jauh?",
       options: [
-        { label: "Jadi sepi", memory: "Sepi banget. Hal-hal receh yang biasanya mau rey ceritain ke sayangjadi nggak punya tujuan.", sticker: "stiker6.webp"},
-        { label: "Nggak ada yang ngomelin", memory: "Ternyata rey kangen diomelin sayang. Aneh ya, tapi itu bentuk sayang cinta yang rey suka.", sticker: "stiker7.webp" },
-        { label: "Nggak ada yang bikin ketawa", memory: "Ketawa sama cinta itu beda. Rey baru sadar seberapa sering sayang bikin hari rey jadi ringan.", sticker: "stiker8.webp" }
-      ]
-    },
-    {
-      q: "Kalau lagi gengsi, rey biasanya gimana?",
+        { label: "Jadi sepi", memory: "Sepi banget. Hal-hal receh yang biasanya langsung kuceritain ke kamu, sekarang nggak tahu harus ke mana.", sticker: "stiker6.webp", emoji: "🌙" },
+        { label: "Nggak ada yang ngomelin", memory: "Ternyata aku kangen diomelin kamu. Aneh ya? Tapi itu bentuk sayang yang aku suka.", sticker: "stiker7.webp", emoji: "😅" },
+        { label: "Nggak ada yang bikin ketawa", memory: "Ketawa bareng kamu itu beda. Baru sekarang aku sadar sesering apa kamu bikin hariku terasa ringan.", sticker: "stiker8.webp", emoji: "😊" }
+      ] },
+    { q: "Kalau lagi gengsi, aku biasanya gimana?",
       options: [
-        { label: "Pura-pura cuek", memory: "Padahal di dalam nggak cuek sama sekali. Rey cuma takut kelihatan terlalu peduli.", sticker: "stiker2.webp"},
-        { label: "Diem aja", memory: "Dan diemku sering bikin sunny salah paham. Maaf ya sayang, itu salah rey .", sticker: "stiker3.webp", emoji: "🤐" },
-        { label: "Sok kuat", memory: "Sok kuat itu capek. Sekarang rey milih jujur aja: rey kangen cinta, dan rey cinta sama sunny.", sticker: "stiker4.webp", emoji: "💪" }
-      ]
-    },
-    {
-      q: "Kalau kita ngobrol lagi, rey pengin...",
+        { label: "Pura-pura cuek", memory: "Padahal di dalam nggak cuek sama sekali. Aku cuma takut kelihatan terlalu peduli.", sticker: "stiker2.webp", emoji: "😶" },
+        { label: "Diem aja", memory: "Dan diamku sering bikin kamu salah paham. Maaf ya, itu salahku.", sticker: "stiker3.webp", emoji: "🤐" },
+        { label: "Sok kuat", memory: "Sok kuat itu capek. Sekarang aku milih jujur aja: aku kangen kamu.", sticker: "stiker4.webp", emoji: "💪" }
+      ] },
+    { q: "Kalau nanti kita ngobrol lagi, aku pengin...",
       options: [
-        { label: "Dengerin sayang dulu", memory: "Rey pengin tau cinta gimana, tanpa buru-buru dan tanpa nyela.", sticker: "stiker3.webp", emoji: "👂" },
-        { label: "Minta maaf", memory: "Buat bagian yang bikin sayang capek atau kecewa. Rey mau belajar jadi lebih baik buat cinta.", sticker: "stiker1.webp", emoji: "🙏" },
-        { label: "Mulai pelan-pelan aja", memory: "Nggak usah langsung balik kayak dulu. Cukup satu obrolan kecil, terus kita lihat bareng.", sticker: "stiker8.webp", emoji: "🌱" }
-      ]
-    }
+        { label: "Dengerin kamu dulu", memory: "Aku pengin tahu kamu gimana, tanpa buru-buru dan tanpa nyela.", sticker: "stiker3.webp", emoji: "👂" },
+        { label: "Minta maaf", memory: "Buat bagian yang bikin kamu capek atau kecewa. Aku mau belajar jadi lebih baik.", sticker: "stiker1.webp", emoji: "🙏" },
+        { label: "Mulai pelan-pelan aja", memory: "Nggak perlu langsung balik kayak dulu. Cukup satu obrolan kecil, lalu kita lihat bareng.", sticker: "stiker8.webp", emoji: "🌱" }
+      ] }
   ],
 
-  // Surat. Matahari terbit pelan-pelan di latar selagi surat diketik (Sunny = matahari).
   surat:
-`Hai Cintaku,
+`Hai {nama},
 
-Rey nggak jago ngomong soal perasaan, makanya rey bikin ini.
+Aku nggak jago ngomongin perasaan, makanya aku bikin ini.
 
-Beberapa waktu ini kita jauh, dan rey baru sadar seberapa besar sayang di hari-hari rey. Tanpa cinta, rasanya mendung terus. Pantes nama sayang Sunny.
+Beberapa waktu ini kita terasa jauh, dan aku baru sadar sebesar apa tempatmu di hari-hariku. Tanpamu, rasanya mendung terus. Ternyata kamu yang selama ini bikin pagiku terang.
 
-Rey nggak mau nyalahin siapa-siapa. rey cuma mau bilang: rey kangen, rey sayang sunny, dan cinta rey ke sunny nggak berkurang sedikit pun.
+Aku nggak mau nyalahin siapa-siapa. Aku cuma mau bilang: aku kangen, aku sayang kamu, dan rasa itu nggak berkurang sedikit pun.
 
-Kalau ada hal dari rey yang bikin cinta capek atau nggak nyaman, rey mau dengerin. Kalau cinta butuh waktu, nggak apa-apa. rey ngerti, dan rey tunggu.
+Kalau ada hal dariku yang bikin kamu capek atau nggak nyaman, aku mau dengerin. Kalau kamu butuh waktu, nggak apa-apa. Aku ngerti, dan aku tunggu.
 
-sunny nggak wajib bales sekarang. Tapi kalau cinta mau, rey seneng banget.
+Kamu nggak wajib bales sekarang. Tapi kalau kamu mau, aku seneng banget.
 
 Dari yang lagi kangen banget,
-Rey`,
+{kamu}`,
 
-  // Janji kecil (permintaan maaf yang konkret lebih bermakna daripada kata maaf doang)
   janji: [
-    "Kalau lagi gengsi, rey bakal bilang jujur, bukan diem.",
-    "Kalau ada yang bikin sunny kecewa, rey dengerin dulu sebelum belain diri.",
-    "Kalau kangen, langsung rey bilang. Nggak pakai ngetik-hapus lagi."
+    "Kalau lagi gengsi, aku bakal bilang jujur, bukan diam.",
+    "Kalau ada yang bikin kamu kecewa, aku dengerin dulu sebelum belain diri.",
+    "Kalau kangen, langsung kubilang. Nggak pakai ngetik-hapus lagi."
   ],
 
-  // Pilihan balasan. Semua aman buat dia. Pesan ini kebuka di WA lo.
   balasan: [
-    { label: "rey juga kangen 🥹",             pesan: "Rey, sunny juga kangen 🥹" },
-    { label: "rey senyum bacanya, tapi rey butuh waktu", pesan: "Rey, sunny senyum bacanya, makasih ya. Tapi sunny butuh waktu dulu 🤍" },
-    { label: "Ngobrol yuk",                     pesan: "Rey, yuk ngobrol. Kapan cinta luang?" }
+    { label: "Aku juga kangen 🥹", pesan: "Hai {kamu}, aku juga kangen 🥹" },
+    { label: "Aku senyum bacanya, tapi butuh waktu", pesan: "Hai {kamu}, aku senyum bacanya, makasih ya. Tapi aku butuh waktu dulu 🤍" },
+    { label: "Ngobrol yuk", pesan: "Hai {kamu}, yuk ngobrol. Kapan kamu luang?" }
   ],
-  mikirDulu: "Oke Sunny, rey tunggu. Santai aja, nggak ada batas waktu. Sambil nunggu, nih rey buatkan website ini khsusu buat sunny bisa buat dikasih tau siapa aj soalny udah online",
-  penutup: "Apa pun jawaban cinta, rey tetap sayang sama cinta."
+  mikirDulu: "Oke {nama}, aku tunggu. Nggak ada batas waktu, nggak ada paksaan. Aku di sini.",
+  penutup: "Apa pun jawabanmu, aku tetap sayang sama kamu.",
+  judulSurat: "{nama}, ini dari {kamu}",
+  judulBalas: "{nama}, aku nunggu ya 🌅"
 };
 
-/* =====================================================
-   LOGIKA (nggak perlu diubah)
-   ===================================================== */
+/* ===================== LOGIKA ===================== */
 const $ = id => document.getElementById(id);
+const T = s => s.replaceAll('{nama}', CONFIG.namaDia).replaceAll('{kamu}', CONFIG.namaKamu);
 const bgm = $('bgm');
 bgm.src = CONFIG.musik;
 let musicWanted = false;
@@ -277,21 +197,17 @@ function dawn(p){
   $('dawn').style.opacity = p;
   $('sun').style.transform = 'translate(-50%,' + ((1 - p) * 100) + '%)';
 }
-
 function show(id){
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   $(id).classList.add('active');
   window.scrollTo(0,0);
 }
-
-/* Musik: mati saat tab disembunyikan, hidup lagi saat kembali */
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) { bgm.pause(); }
-  else if (musicWanted) { bgm.play().catch(()=>{}); }
+  if (document.hidden) bgm.pause();
+  else if (musicWanted) bgm.play().catch(()=>{});
 });
 
-/* Stiker dengan fallback emoji kalau file nggak ketemu */
-function makeSticker(src){
+function makeSticker(src, emoji){
   const wrap = document.createElement('div');
   const img = new Image();
   img.className = 'sticker';
@@ -301,18 +217,17 @@ function makeSticker(src){
     wrap.innerHTML = '';
     const e = document.createElement('div');
     e.className = 'sticker-fallback';
-    e.textContent = emoji || '';
+    e.textContent = emoji || '💗';
     wrap.appendChild(e);
   };
   wrap.appendChild(img);
   return wrap;
 }
 
-/* Ledakan hati kecil pas klik */
 function burst(e){
   const x = e.clientX || innerWidth/2, y = e.clientY || innerHeight/2;
   const set = ['💗','💖','✨','💕','🌸'];
-  for(let i=0;i<10;i++){
+  for (let i = 0; i < 10; i++){
     const h = document.createElement('span');
     h.className = 'fh';
     h.textContent = set[i % set.length];
@@ -324,9 +239,10 @@ function burst(e){
   }
 }
 
-/* ---- Layar 1 ---- */
-$('introTitle').textContent = CONFIG.judulIntro;
-$('envelope').addEventListener('click', (e) => {
+/* Layar 1 */
+document.title = 'Buat ' + CONFIG.namaDia + ' 💌';
+$('introTitle').textContent = T(CONFIG.judulIntro);
+$('envelope').addEventListener('click', e => {
   burst(e);
   $('envelope').classList.add('open');
   musicWanted = true;
@@ -335,11 +251,11 @@ $('envelope').addEventListener('click', (e) => {
   setTimeout(() => { startQuiz(); show('s-quiz'); }, 800);
 }, { once:true });
 
-/* ---- Layar 2: kuis dalam bentuk chat ---- */
+/* Layar 2: kuis berbentuk chat */
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const chat = $('chat'), dock = $('dock');
-function toEnd(){ chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' }); }
-function buzz(){ if (navigator.vibrate) navigator.vibrate(25); }
+const toEnd = () => chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' });
+const buzz = () => { if (navigator.vibrate) navigator.vibrate(25); };
 
 async function typing(ms){
   $('status').textContent = 'sedang mengetik...';
@@ -352,6 +268,7 @@ async function typing(ms){
   $('status').textContent = 'online';
 }
 async function say(text){
+  text = T(text);
   const b = document.createElement('div');
   b.className = 'bubble them';
   chat.appendChild(b); buzz();
@@ -368,26 +285,7 @@ function reply(text){
   b.className = 'bubble me';
   b.textContent = text;
   chat.appendChild(b); toEnd();
-}
-function stickerBubble(src, emoji){
-  const w = document.createElement('div');
-  w.className = 'bubble them stk';
-  const st = makeSticker(src, emoji);
-  w.appendChild(st);
-  w.addEventListener('click', e => {
-    burst(e);
-    st.animate([{transform:'scale(1)'},{transform:'scale(1.35) rotate(8deg)'},{transform:'scale(1)'}], {duration:450});
-  });
-  chat.appendChild(w); buzz(); toEnd();
-}
-function dockButtons(list){
-  dock.innerHTML = '';
-  list.forEach(({label, cls, onClick}) => {
-    const b = document.createElement('button');
-    if (cls) b.className = cls;
-    b.textContent = label;
-    b.addEventListener('click', e => { burst(e); onClick(); });
-    dock.appendChild(b);
+}appendChild(b);
   });
 }
 
@@ -397,17 +295,15 @@ $('chatName').textContent = CONFIG.namaKamu;
 async function startQuiz(){
   qi = 0; chat.innerHTML = ''; dock.innerHTML = '';
   await sleep(500);
-  // meniru "ngetik, berhenti, ngetik lagi" sebelum akhirnya berani kirim
-  await typing(1400);
+  await typing(1400);          // ngetik, berhenti, ngetik lagi: tanda ragu sebelum berani kirim
   await sleep(900);
   await typing(1500);
-  await say('Hai ' + CONFIG.namaDia + '.');
+  await say('Hai {nama}.');
   await sleep(600);
-  await say('Boleh rey nanya-nanya sebentar? Kayak kuis kecil, tapi nggak ada jawaban yang salah.');
+  await say('Boleh aku nanya-nanya sebentar? Kayak kuis kecil, tapi nggak ada jawaban yang salah.');
   await sleep(500);
   runQuestion();
 }
-
 async function runQuestion(){
   const item = CONFIG.kuis[qi];
   dock.innerHTML = '';
@@ -415,7 +311,6 @@ async function runQuestion(){
   await say(item.q);
   dockButtons(item.options.map(opt => ({ label: opt.label, onClick: () => pick(opt) })));
 }
-
 async function pick(opt){
   if (busy) return;
   busy = true;
@@ -427,10 +322,9 @@ async function pick(opt){
   await sleep(500);
   stickerBubble(CONFIG.stikerFolder + opt.sticker, opt.emoji);
   await sleep(1300);
-  const last = qi === CONFIG.kuis.length - 1;
-  if (last){
+  if (qi === CONFIG.kuis.length - 1){
     await typing(1100);
-    await say('Rey nulis sesuatu buat sunny. Boleh dibaca ya?');
+    await say('Aku nulis sesuatu buat kamu. Boleh dibaca ya?');
     dockButtons([{ label: 'Baca suratnya', cls: 'primary', onClick: () => { show('s-letter'); startLetter(); } }]);
   } else {
     dockButtons([{ label: 'Lanjut', cls: 'primary', onClick: () => { qi++; runQuestion(); } }]);
@@ -438,12 +332,11 @@ async function pick(opt){
   busy = false;
 }
 
-/* ---- Layar 3: surat dengan efek ketik ---- */
+/* Layar 3: surat dengan efek ketik + matahari terbit */
 let letterRun = 0, fullText = '';
 async function startLetter(){
-  fullText = CONFIG.surat
-    .replace('{nama}', CONFIG.namaDia)
-    .replace('{kamu}', CONFIG.namaKamu);
+  fullText = T(CONFIG.surat);
+  $('letterTitle').textContent = T(CONFIG.judulSurat);
   const el = $('letterText');
   el.textContent = '';
   const run = ++letterRun;
@@ -468,7 +361,7 @@ function finishLetter(){
 $('letterBox').addEventListener('click', finishLetter);
 $('toReply').addEventListener('click', () => { show('s-promise'); buildPromise(); });
 
-/* ---- Layar 3b: janji ---- */
+/* Layar 3b: janji */
 function buildPromise(){
   const box = $('promises');
   box.innerHTML = '';
@@ -482,7 +375,7 @@ function buildPromise(){
       if (c.classList.contains('open')) return;
       burst(e);
       c.classList.add('open');
-      c.textContent = text;
+      c.textContent = T(text);
       buzz();
       if (++opened === CONFIG.janji.length) $('toReply2').style.display = 'block';
     });
@@ -491,22 +384,21 @@ function buildPromise(){
 }
 $('toReply2').addEventListener('click', () => { show('s-reply'); buildReply(); });
 
-/* ---- Layar 4: balasan ---- */
+/* Layar 4: balasan */
 function buildReply(){
-  $('replyTitle').textContent = CONFIG.namaDia + ', rey nunggu ya 🌅';
-  $('replyHint').textContent = CONFIG.penutup;
+  $('replyTitle').textContent = T(CONFIG.judulBalas);
+  $('replyHint').textContent = T(CONFIG.penutup);
   const rs = $('replySticker');
   rs.innerHTML = '';
-  rs.appendChild(makeSticker(CONFIG.stikerAkhir, '🥰'));
+  rs.appendChild(makeSticker(CONFIG.stikerFolder + CONFIG.stikerAkhir, '🥰'));
   const box = $('replyOptions');
   box.innerHTML = '';
   CONFIG.balasan.forEach(r => {
     const b = document.createElement('button');
     b.className = 'primary';
-    b.textContent = r.label;
+    b.textContent = T(r.label);
     b.addEventListener('click', () => {
-      const url = 'https://wa.me/' + CONFIG.waNumber + '?text=' + encodeURIComponent(r.pesan);
-      window.open(url, '_blank');
+      window.open('https://wa.me/' + CONFIG.waNumber + '?text=' + encodeURIComponent(T(r.pesan)), '_blank');
     });
     box.appendChild(b);
   });
@@ -515,7 +407,7 @@ function buildReply(){
   t.textContent = 'Mikir dulu ya';
   t.addEventListener('click', () => {
     const c = $('coupon');
-    c.textContent = CONFIG.mikirDulu;
+    c.textContent = T(CONFIG.mikirDulu);
     c.classList.add('show');
   });
   box.appendChild(t);
@@ -523,3 +415,22 @@ function buildReply(){
 </script>
 </body>
 </html>
+function stickerBubble(src, emoji){
+  const w = document.createElement('div');
+  w.className = 'bubble them stk';
+  const st = makeSticker(src, emoji);
+  w.appendChild(st);
+  w.addEventListener('click', e => {
+    burst(e);
+    st.animate([{transform:'scale(1)'},{transform:'scale(1.35) rotate(8deg)'},{transform:'scale(1)'}], {duration:450});
+  });
+  chat.appendChild(w); buzz(); toEnd();
+}
+function dockButtons(list){
+  dock.innerHTML = '';
+  list.forEach(({label, cls, onClick}) => {
+    const b = document.createElement('button');
+    if (cls) b.className = cls;
+    b.textContent = label;
+    b.addEventListener('click', e => { burst(e); onClick(); });
+    dock.
